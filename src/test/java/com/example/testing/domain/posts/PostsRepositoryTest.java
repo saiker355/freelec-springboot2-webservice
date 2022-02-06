@@ -31,7 +31,8 @@ public class PostsRepositoryTest {
         String content = "본문 내용 테스트 " +
                 "입니다";
 
-        postsRepository.save(Posts.builder()
+        postsRepository.save(
+                Posts.builder()
                 .title(title)
                 .content(content)
                 .author("dffd@naver.com")
