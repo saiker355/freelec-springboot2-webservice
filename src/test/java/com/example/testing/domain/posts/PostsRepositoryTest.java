@@ -1,7 +1,7 @@
 package com.example.testing.domain.posts;
 
 import org.assertj.core.api.Assertions;
-import org.hamcrest.MatcherAssert;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -42,8 +43,33 @@ public class PostsRepositoryTest {
         List<Posts> postsList = postsRepository.findAll();
 
         Posts posts= postsList.get(0);
-        Assertions.assertThat(posts.getTitle()).isEqualTo(title);
-        Assertions.assertThat(posts.getContent()).isEqualTo(content);
+
+        assertThat(posts.getTitle()).isEqualTo(title);
+        assertThat(posts.getContent()).isEqualTo(content);
+    }
+
+    @Test
+    public void BaseTimeEntityRegist(){
+        //given
+        LocalDateTime now = LocalDateTime.now();
+        postsRepository.save(Posts.builder()
+                .title("제목1")
+                .content("내ㅛㅇㅇㅇ")
+                .author("ㅇㅇ")
+                .build());
+
+        //when
+        List<Posts> postsList = postsRepository.findAll();
+
+        //then
+        Posts posts = postsList.get(0);
+
+        System.out.println("dfdfdf >>>>>>>"+ now);
+
+        System.out.println("dfdf >>>>>>>"+ posts.getCreatedDate()+" >>>>>>>>>" +posts.getModifiedDate());
+
+        assertThat(posts.getCreatedDate()).isAfter(now);
+        assertThat(posts.getModifiedDate()).isAfter(now);
     }
 
 }

@@ -55,7 +55,7 @@ public class PostsApiControllerTest {
                 .author(author)
                 .build();
 
-        String url = "https://localhost:"+port+"/api/v1/posts";
+        String url = "http://localhost:"+port+"/api/v1/posts";
 
         ResponseEntity<Long> responseEntity  = testRestTemplate.postForEntity(url, requestDto, Long.class);
 
